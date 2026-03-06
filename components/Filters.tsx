@@ -8,6 +8,10 @@ interface FiltersProps {
   onLocationChange: (location: string) => void;
   inStockOnly: boolean;
   onInStockChange: (checked: boolean) => void;
+  selectedCPU: string;
+  onCPUChange: (cpu: string) => void;
+  selectedRAM: string;
+  onRAMChange: (ram: string) => void;
 }
 
 export default function Filters({
@@ -16,6 +20,10 @@ export default function Filters({
   onLocationChange,
   inStockOnly,
   onInStockChange,
+  selectedCPU,
+  onCPUChange,
+  selectedRAM,
+  onRAMChange,
 }: FiltersProps) {
   const [selectedQuickFilter, setSelectedQuickFilter] = useState('all');
 
@@ -25,6 +33,23 @@ export default function Filters({
     { id: 'storage', label: 'Big Storage', icon: '💾' },
     { id: 'budget', label: 'Budget', icon: '💰' },
   ];
+
+  const cpuOptions = [
+    { value: '', label: 'All CPUs' },
+    { value: 'Intel Xeon', label: 'Intel Xeon' },
+    { value: 'AMD Ryzen', label: 'AMD Ryzen' },
+    { value: 'AMD EPYC', label: 'AMD EPYC' },
+  ];
+
+  const ramOptions = [
+    { value: '', label: 'Any RAM' },
+    { value: '32', label: '32GB+' },
+    { value: '64', label: '64GB+' },
+    { value: '128', label: '128GB+' },
+    { value: '256', label: '256GB+' },
+  ];
+
+  const hasActiveFilters = selectedLocation || inStockOnly || selectedCPU || selectedRAM;
 
   return (
     <div className="space-y-6 mb-8">
@@ -64,11 +89,13 @@ export default function Filters({
             <h3 className="text-sm font-semibold text-slate-300 uppercase tracking-wide">Advanced Filters</h3>
           </div>
           
-          {(selectedLocation || inStockOnly) && (
+          {hasActiveFilters && (
             <button
               onClick={() => {
                 onLocationChange("");
                 onInStockChange(false);
+                onCPUChange("");
+                onRAMChange("");
               }}
               className="text-xs text-blue-400 hover:text-blue-300 font-medium flex items-center gap-1 px-3 py-1.5 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 transition-all"
             >
@@ -121,13 +148,16 @@ export default function Filters({
             </label>
             <div className="relative">
               <select
+                value={selectedCPU}
+                onChange={(e) => onCPUChange(e.target.value)}
                 className="w-full px-4 py-3 pr-10 border border-slate-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-[#0f1117] hover:bg-[#14161f] transition-all appearance-none cursor-pointer text-white text-sm font-medium"
                 style={{ backgroundImage: 'none' }}
               >
-                <option className="bg-[#1a1d29]">All CPUs</option>
-                <option className="bg-[#1a1d29]">Intel Xeon</option>
-                <option className="bg-[#1a1d29]">AMD Ryzen</option>
-                <option className="bg-[#1a1d29]">AMD EPYC</option>
+                {cpuOptions.map((option) => (
+                  <option key={option.value} value={option.value} className="bg-[#1a1d29]">
+                    {option.label}
+                  </option>
+                ))}
               </select>
               <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
                 <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -147,14 +177,16 @@ export default function Filters({
             </label>
             <div className="relative">
               <select
+                value={selectedRAM}
+                onChange={(e) => onRAMChange(e.target.value)}
                 className="w-full px-4 py-3 pr-10 border border-slate-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-[#0f1117] hover:bg-[#14161f] transition-all appearance-none cursor-pointer text-white text-sm font-medium"
                 style={{ backgroundImage: 'none' }}
               >
-                <option className="bg-[#1a1d29]">Any RAM</option>
-                <option className="bg-[#1a1d29]">32GB+</option>
-                <option className="bg-[#1a1d29]">64GB+</option>
-                <option className="bg-[#1a1d29]">128GB+</option>
-                <option className="bg-[#1a1d29]">256GB+</option>
+                {ramOptions.map((option) => (
+                  <option key={option.value} value={option.value} className="bg-[#1a1d29]">
+                    {option.label}
+                  </option>
+                ))}
               </select>
               <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
                 <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -188,7 +220,7 @@ export default function Filters({
         </div>
 
         {/* Active Filters Tags */}
-        {(selectedLocation || inStockOnly) && (
+        {hasActiveFilters && (
           <div className="mt-6 pt-6 border-t border-slate-700/30">
             <div className="flex items-center gap-2 flex-wrap">
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Active:</span>
@@ -198,6 +230,32 @@ export default function Filters({
                   <button
                     onClick={() => onLocationChange("")}
                     className="ml-0.5 hover:bg-blue-400/30 rounded-full p-0.5 transition-colors"
+                  >
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </span>
+              )}
+              {selectedCPU && (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-purple-500/20 border border-purple-400/30 text-purple-300 rounded-lg text-xs font-medium">
+                  🔧 {selectedCPU}
+                  <button
+                    onClick={() => onCPUChange("")}
+                    className="ml-0.5 hover:bg-purple-400/30 rounded-full p-0.5 transition-colors"
+                  >
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </span>
+              )}
+              {selectedRAM && (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-orange-500/20 border border-orange-400/30 text-orange-300 rounded-lg text-xs font-medium">
+                  💾 {ramOptions.find(r => r.value === selectedRAM)?.label}
+                  <button
+                    onClick={() => onRAMChange("")}
+                    className="ml-0.5 hover:bg-orange-400/30 rounded-full p-0.5 transition-colors"
                   >
                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

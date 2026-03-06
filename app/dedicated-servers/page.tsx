@@ -10,6 +10,8 @@ export default function DedicatedServersPage() {
   const [loading, setLoading] = useState(true);
   const [selectedLocation, setSelectedLocation] = useState("");
   const [inStockOnly, setInStockOnly] = useState(false);
+  const [selectedCPU, setSelectedCPU] = useState("");
+  const [selectedRAM, setSelectedRAM] = useState("");
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
@@ -34,7 +36,20 @@ export default function DedicatedServersPage() {
     const matchesLocation =
       !selectedLocation || product.location === selectedLocation;
     const matchesStock = !inStockOnly || product.available;
-    return matchesLocation && matchesStock;
+    
+    // CPU filtering - check if product title contains the CPU type
+    const matchesCPU = !selectedCPU || product.title.includes(selectedCPU);
+    
+    // RAM filtering - extract RAM number and compare
+    const matchesRAM = !selectedRAM || (() => {
+      const ramMatch = product.ram.match(/(\d+)GB/);
+      if (!ramMatch) return false;
+      const productRAM = parseInt(ramMatch[1]);
+      const minRAM = parseInt(selectedRAM);
+      return productRAM >= minRAM;
+    })();
+    
+    return matchesLocation && matchesStock && matchesCPU && matchesRAM;
   });
 
   // Handle filter changes with transition
@@ -50,6 +65,22 @@ export default function DedicatedServersPage() {
     setIsTransitioning(true);
     setTimeout(() => {
       setInStockOnly(checked);
+      setIsTransitioning(false);
+    }, 150);
+  };
+
+  const handleCPUChange = (cpu: string) => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setSelectedCPU(cpu);
+      setIsTransitioning(false);
+    }, 150);
+  };
+
+  const handleRAMChange = (ram: string) => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setSelectedRAM(ram);
       setIsTransitioning(false);
     }, 150);
   };
@@ -89,6 +120,10 @@ export default function DedicatedServersPage() {
           onLocationChange={handleLocationChange}
           inStockOnly={inStockOnly}
           onInStockChange={handleStockChange}
+          selectedCPU={selectedCPU}
+          onCPUChange={handleCPUChange}
+          selectedRAM={selectedRAM}
+          onRAMChange={handleRAMChange}
         />
 
         <div className="mb-6 flex items-center justify-between">
