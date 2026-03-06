@@ -12,6 +12,7 @@ export default function DedicatedServersPage() {
   const [inStockOnly, setInStockOnly] = useState(false);
   const [selectedCPU, setSelectedCPU] = useState("");
   const [selectedRAM, setSelectedRAM] = useState("");
+  const [selectedQuickFilter, setSelectedQuickFilter] = useState("all");
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
@@ -49,7 +50,29 @@ export default function DedicatedServersPage() {
       return productRAM >= minRAM;
     })();
     
-    return matchesLocation && matchesStock && matchesCPU && matchesRAM;
+    // Quick filter logic
+    let matchesQuickFilter = true;
+    if (selectedQuickFilter === 'performance') {
+      // Performance: 128GB+ RAM or AMD EPYC
+      const ramMatch = product.ram.match(/(\d+)GB/);
+      const hasHighRAM = ramMatch && parseInt(ramMatch[1]) >= 128;
+      const isHighEndCPU = product.title.includes('EPYC') || product.title.includes('Gold');
+      matchesQuickFilter = hasHighRAM || isHighEndCPU;
+    } else if (selectedQuickFilter === 'storage') {
+      // Big Storage: 4TB+ storage
+      const storageMatch = product.storage.match(/(\d+)x(\d+)TB/);
+      if (storageMatch) {
+        const totalTB = parseInt(storageMatch[1]) * parseInt(storageMatch[2]);
+        matchesQuickFilter = totalTB >= 4;
+      } else {
+        matchesQuickFilter = false;
+      }
+    } else if (selectedQuickFilter === 'budget') {
+      // Budget: Under $100/month
+      matchesQuickFilter = product.price < 100;
+    }
+    
+    return matchesLocation && matchesStock && matchesCPU && matchesRAM && matchesQuickFilter;
   });
 
   // Handle filter changes with transition
@@ -81,6 +104,14 @@ export default function DedicatedServersPage() {
     setIsTransitioning(true);
     setTimeout(() => {
       setSelectedRAM(ram);
+      setIsTransitioning(false);
+    }, 150);
+  };
+
+  const handleQuickFilterChange = (filter: string) => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setSelectedQuickFilter(filter);
       setIsTransitioning(false);
     }, 150);
   };
@@ -124,6 +155,8 @@ export default function DedicatedServersPage() {
           onCPUChange={handleCPUChange}
           selectedRAM={selectedRAM}
           onRAMChange={handleRAMChange}
+          selectedQuickFilter={selectedQuickFilter}
+          onQuickFilterChange={handleQuickFilterChange}
         />
 
         <div className="mb-6 flex items-center justify-between">
