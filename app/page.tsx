@@ -28,7 +28,7 @@ export default function HomePage() {
           WHMCS <span className="bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">Middleware</span>
         </h1>
         <p className="text-xl text-slate-600 mb-12 max-w-2xl mx-auto leading-relaxed">
-          Clean architecture demo showcasing separation between frontend and WHMCS backend with Next.js 14
+          Clean architecture demo showcasing separation between frontend and WHMCS backend.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">

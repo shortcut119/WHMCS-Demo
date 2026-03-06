@@ -10,6 +10,7 @@ export default function DedicatedServersPage() {
   const [loading, setLoading] = useState(true);
   const [selectedLocation, setSelectedLocation] = useState("");
   const [inStockOnly, setInStockOnly] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
     // Fetch from our middleware API route (not directly from WHMCS)
@@ -36,10 +37,30 @@ export default function DedicatedServersPage() {
     return matchesLocation && matchesStock;
   });
 
+  // Handle filter changes with transition
+  const handleLocationChange = (location: string) => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setSelectedLocation(location);
+      setIsTransitioning(false);
+    }, 150);
+  };
+
+  const handleStockChange = (checked: boolean) => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setInStockOnly(checked);
+      setIsTransitioning(false);
+    }, 150);
+  };
+
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-gray-600">Loading products...</div>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="text-slate-600 font-medium">Loading products...</div>
+        </div>
       </div>
     );
   }
@@ -65,9 +86,9 @@ export default function DedicatedServersPage() {
         <Filters
           locations={locations}
           selectedLocation={selectedLocation}
-          onLocationChange={setSelectedLocation}
+          onLocationChange={handleLocationChange}
           inStockOnly={inStockOnly}
-          onInStockChange={setInStockOnly}
+          onInStockChange={handleStockChange}
         />
 
         <div className="mb-6 flex items-center justify-between">
@@ -76,15 +97,23 @@ export default function DedicatedServersPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div 
+          className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 transition-all duration-300 ${
+            isTransitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
+          }`}
+        >
           {filteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
 
         {filteredProducts.length === 0 && (
-          <div className="text-center py-12 text-gray-500">
-            No servers match your filters
+          <div className="text-center py-16 bg-white rounded-2xl shadow-lg border border-slate-200">
+            <svg className="w-16 h-16 text-slate-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+            </svg>
+            <p className="text-slate-500 text-lg font-medium">No servers match your filters</p>
+            <p className="text-slate-400 text-sm mt-2">Try adjusting your search criteria</p>
           </div>
         )}
       </div>
