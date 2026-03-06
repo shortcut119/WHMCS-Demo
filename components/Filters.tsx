@@ -221,15 +221,15 @@ export default function Filters({
 
         {/* Active Filters Tags */}
         {hasActiveFilters && (
-          <div className="mt-6 pt-6 border-t border-slate-700/30">
+          <div className="mt-6 pt-6 border-t border-gray-200">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Active:</span>
+              <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Active:</span>
               {selectedLocation && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-500/20 border border-blue-400/30 text-blue-300 rounded-lg text-xs font-medium">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-100 border border-blue-200 text-blue-700 rounded-lg text-xs font-medium">
                   📍 {selectedLocation}
                   <button
                     onClick={() => onLocationChange("")}
-                    className="ml-0.5 hover:bg-blue-400/30 rounded-full p-0.5 transition-colors"
+                    className="ml-0.5 hover:bg-blue-200 rounded-full p-0.5 transition-colors"
                   >
                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -238,11 +238,11 @@ export default function Filters({
                 </span>
               )}
               {selectedCPU && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-purple-500/20 border border-purple-400/30 text-purple-300 rounded-lg text-xs font-medium">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-purple-100 border border-purple-200 text-purple-700 rounded-lg text-xs font-medium">
                   🔧 {selectedCPU}
                   <button
                     onClick={() => onCPUChange("")}
-                    className="ml-0.5 hover:bg-purple-400/30 rounded-full p-0.5 transition-colors"
+                    className="ml-0.5 hover:bg-purple-200 rounded-full p-0.5 transition-colors"
                   >
                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -251,11 +251,11 @@ export default function Filters({
                 </span>
               )}
               {selectedRAM && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-orange-500/20 border border-orange-400/30 text-orange-300 rounded-lg text-xs font-medium">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-orange-100 border border-orange-200 text-orange-700 rounded-lg text-xs font-medium">
                   💾 {ramOptions.find(r => r.value === selectedRAM)?.label}
                   <button
                     onClick={() => onRAMChange("")}
-                    className="ml-0.5 hover:bg-orange-400/30 rounded-full p-0.5 transition-colors"
+                    className="ml-0.5 hover:bg-orange-200 rounded-full p-0.5 transition-colors"
                   >
                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -264,11 +264,11 @@ export default function Filters({
                 </span>
               )}
               {inStockOnly && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-green-500/20 border border-green-400/30 text-green-300 rounded-lg text-xs font-medium">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-green-100 border border-green-200 text-green-700 rounded-lg text-xs font-medium">
                   ✓ In Stock
                   <button
                     onClick={() => onInStockChange(false)}
-                    className="ml-0.5 hover:bg-green-400/30 rounded-full p-0.5 transition-colors"
+                    className="ml-0.5 hover:bg-green-200 rounded-full p-0.5 transition-colors"
                   >
                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
