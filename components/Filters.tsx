@@ -56,7 +56,7 @@ export default function Filters({
   return (
     <div className="space-y-6 mb-8">
       {/* Quick Filters */}
-      <div className="bg-[#1A1A1A] backdrop-blur-sm rounded-2xl border border-slate-700/30 p-6">
+      <div className="bg-[#1e2433] backdrop-blur-sm rounded-2xl border border-slate-600/30 p-6">
         <div className="flex items-center gap-2 mb-4">
           <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -82,7 +82,7 @@ export default function Filters({
       </div>
 
       {/* Main Filters */}
-      <div className="bg-[#1A1A1A] backdrop-blur-sm rounded-2xl border border-slate-700/30 p-6">
+      <div className="bg-[#1e2433] backdrop-blur-sm rounded-2xl border border-slate-600/30 p-6">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
             <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -125,9 +125,9 @@ export default function Filters({
                 className="w-full px-4 py-3 pr-10 border border-slate-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-[#0f1117] hover:bg-[#14161f] transition-all appearance-none cursor-pointer text-white text-sm font-medium"
                 style={{ backgroundImage: 'none' }}
               >
-                <option value="" className="bg-[#1A1A1A]">All Locations</option>
+                <option value="" className="bg-[#1e2433]">All Locations</option>
                 {locations.map((location) => (
-                  <option key={location} value={location} className="bg-[#1A1A1A]">
+                  <option key={location} value={location} className="bg-[#1e2433]">
                     📍 {location}
                   </option>
                 ))}
@@ -156,7 +156,7 @@ export default function Filters({
                 style={{ backgroundImage: 'none' }}
               >
                 {cpuOptions.map((option) => (
-                  <option key={option.value} value={option.value} className="bg-[#1A1A1A]">
+                  <option key={option.value} value={option.value} className="bg-[#1e2433]">
                     {option.label}
                   </option>
                 ))}
@@ -185,7 +185,7 @@ export default function Filters({
                 style={{ backgroundImage: 'none' }}
               >
                 {ramOptions.map((option) => (
-                  <option key={option.value} value={option.value} className="bg-[#1A1A1A]">
+                  <option key={option.value} value={option.value} className="bg-[#1e2433]">
                     {option.label}
                   </option>
                 ))}
