@@ -56,7 +56,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         <div>
           <div className="text-xs text-gray-500 font-medium mb-1">Starting at</div>
           <div>
-            <span className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="text-3xl font-bold text-slate-900">
               ${product.price}
             </span>
             <span className="text-sm text-gray-500 ml-1">/mo</span>
@@ -64,9 +64,9 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
         <button
           disabled={!product.available}
-          className={`px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${
+          className={`px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-300 flex items-center gap-2 active:scale-95 ${
             product.available
-              ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:shadow-lg hover:shadow-blue-500/50 hover:scale-105"
+              ? "bg-slate-900 text-white hover:bg-slate-800 hover:shadow-lg hover:scale-105"
               : "bg-gray-200 text-gray-400 cursor-not-allowed"
           }`}
         >
