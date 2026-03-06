@@ -123,9 +123,9 @@ export default function Filters({
                 className="w-full px-4 py-3 pr-10 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50 hover:bg-white transition-all appearance-none cursor-pointer text-gray-900 text-sm font-medium"
                 style={{ backgroundImage: 'none' }}
               >
-                <option value="" className="bg-white">All Locations</option>
+                <option value="" className="bg-white text-gray-900">All Locations</option>
                 {locations.map((location) => (
-                  <option key={location} value={location} className="bg-white">
+                  <option key={location} value={location} className="bg-white text-gray-900">
                     📍 {location}
                   </option>
                 ))}
@@ -154,7 +154,7 @@ export default function Filters({
                 style={{ backgroundImage: 'none' }}
               >
                 {cpuOptions.map((option) => (
-                  <option key={option.value} value={option.value} className="bg-white">
+                  <option key={option.value} value={option.value} className="bg-white text-gray-900">
                     {option.label}
                   </option>
                 ))}
@@ -179,17 +179,17 @@ export default function Filters({
               <select
                 value={selectedRAM}
                 onChange={(e) => onRAMChange(e.target.value)}
-                className="w-full px-4 py-3 pr-10 border border-slate-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-[#0f1117] hover:bg-[#14161f] transition-all appearance-none cursor-pointer text-white text-sm font-medium"
+                className="w-full px-4 py-3 pr-10 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50 hover:bg-white transition-all appearance-none cursor-pointer text-gray-900 text-sm font-medium"
                 style={{ backgroundImage: 'none' }}
               >
                 {ramOptions.map((option) => (
-                  <option key={option.value} value={option.value} className="bg-[#1e2433]">
+                  <option key={option.value} value={option.value} className="bg-white text-gray-900">
                     {option.label}
                   </option>
                 ))}
               </select>
               <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </div>
