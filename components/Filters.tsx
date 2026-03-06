@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 interface FiltersProps {
   locations: string[];
   selectedLocation: string;
@@ -15,6 +17,8 @@ export default function Filters({
   inStockOnly,
   onInStockChange,
 }: FiltersProps) {
+  const [selectedQuickFilter, setSelectedQuickFilter] = useState('all');
+
   const quickFilters = [
     { id: 'all', label: 'All Plans', icon: '🌐' },
     { id: 'performance', label: 'Performance', icon: '⚡' },
@@ -25,7 +29,7 @@ export default function Filters({
   return (
     <div className="space-y-6 mb-8">
       {/* Quick Filters */}
-      <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-6">
+      <div className="bg-[#1a1d29] backdrop-blur-sm rounded-2xl border border-slate-700/30 p-6">
         <div className="flex items-center gap-2 mb-4">
           <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -36,8 +40,9 @@ export default function Filters({
           {quickFilters.map((filter) => (
             <button
               key={filter.id}
+              onClick={() => setSelectedQuickFilter(filter.id)}
               className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 ${
-                filter.id === 'all'
+                selectedQuickFilter === filter.id
                   ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30 hover:bg-blue-500'
                   : 'bg-slate-700/50 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-600/50'
               }`}
@@ -50,7 +55,7 @@ export default function Filters({
       </div>
 
       {/* Main Filters */}
-      <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-6">
+      <div className="bg-[#1a1d29] backdrop-blur-sm rounded-2xl border border-slate-700/30 p-6">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
             <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -88,12 +93,12 @@ export default function Filters({
               <select
                 value={selectedLocation}
                 onChange={(e) => onLocationChange(e.target.value)}
-                className="w-full px-4 py-3 pr-10 border border-slate-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-slate-900/70 hover:bg-slate-900 transition-all appearance-none cursor-pointer text-white text-sm font-medium"
+                className="w-full px-4 py-3 pr-10 border border-slate-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-[#0f1117] hover:bg-[#14161f] transition-all appearance-none cursor-pointer text-white text-sm font-medium"
                 style={{ backgroundImage: 'none' }}
               >
-                <option value="" className="bg-slate-800">All Locations</option>
+                <option value="" className="bg-[#1a1d29]">All Locations</option>
                 {locations.map((location) => (
-                  <option key={location} value={location} className="bg-slate-800">
+                  <option key={location} value={location} className="bg-[#1a1d29]">
                     📍 {location}
                   </option>
                 ))}
@@ -116,13 +121,13 @@ export default function Filters({
             </label>
             <div className="relative">
               <select
-                className="w-full px-4 py-3 pr-10 border border-slate-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-slate-900/70 hover:bg-slate-900 transition-all appearance-none cursor-pointer text-white text-sm font-medium"
+                className="w-full px-4 py-3 pr-10 border border-slate-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-[#0f1117] hover:bg-[#14161f] transition-all appearance-none cursor-pointer text-white text-sm font-medium"
                 style={{ backgroundImage: 'none' }}
               >
-                <option className="bg-slate-800">All CPUs</option>
-                <option className="bg-slate-800">Intel Xeon</option>
-                <option className="bg-slate-800">AMD Ryzen</option>
-                <option className="bg-slate-800">AMD EPYC</option>
+                <option className="bg-[#1a1d29]">All CPUs</option>
+                <option className="bg-[#1a1d29]">Intel Xeon</option>
+                <option className="bg-[#1a1d29]">AMD Ryzen</option>
+                <option className="bg-[#1a1d29]">AMD EPYC</option>
               </select>
               <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
                 <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -142,14 +147,14 @@ export default function Filters({
             </label>
             <div className="relative">
               <select
-                className="w-full px-4 py-3 pr-10 border border-slate-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-slate-900/70 hover:bg-slate-900 transition-all appearance-none cursor-pointer text-white text-sm font-medium"
+                className="w-full px-4 py-3 pr-10 border border-slate-600/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-[#0f1117] hover:bg-[#14161f] transition-all appearance-none cursor-pointer text-white text-sm font-medium"
                 style={{ backgroundImage: 'none' }}
               >
-                <option className="bg-slate-800">Any RAM</option>
-                <option className="bg-slate-800">32GB+</option>
-                <option className="bg-slate-800">64GB+</option>
-                <option className="bg-slate-800">128GB+</option>
-                <option className="bg-slate-800">256GB+</option>
+                <option className="bg-[#1a1d29]">Any RAM</option>
+                <option className="bg-[#1a1d29]">32GB+</option>
+                <option className="bg-[#1a1d29]">64GB+</option>
+                <option className="bg-[#1a1d29]">128GB+</option>
+                <option className="bg-[#1a1d29]">256GB+</option>
               </select>
               <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
                 <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -167,7 +172,7 @@ export default function Filters({
               </svg>
               Availability
             </label>
-            <label className="relative inline-flex items-center cursor-pointer w-full px-4 py-3 border border-slate-600/50 rounded-xl bg-slate-900/70 hover:bg-slate-900 transition-all group">
+            <label className="relative inline-flex items-center cursor-pointer w-full px-4 py-3 border border-slate-600/50 rounded-xl bg-[#0f1117] hover:bg-[#14161f] transition-all group">
               <input
                 type="checkbox"
                 checked={inStockOnly}
@@ -184,7 +189,7 @@ export default function Filters({
 
         {/* Active Filters Tags */}
         {(selectedLocation || inStockOnly) && (
-          <div className="mt-6 pt-6 border-t border-slate-700/50">
+          <div className="mt-6 pt-6 border-t border-slate-700/30">
             <div className="flex items-center gap-2 flex-wrap">
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Active:</span>
               {selectedLocation && (
